@@ -37,18 +37,18 @@ def create_samples(samples, cls, ordering):
     return X, Y
 
 def main():
-    X_train, Y_train_oh, ordering = create_dataset('livingroom.json', 'bedroom.json')
+    X_train, Y_train_oh, ordering = create_dataset('philz_train.json', 'outdoors_train.json')
     results = lstsq(X_train, Y_train_oh)
     w = results[0]
     np.save('w.npy', w)
     np.save('ordering.npy', np.array(ordering))
 
-    X_test, Y_test_oh, _ = create_dataset('livingroom_test.json', 'bedroom_test.json', ordering=ordering)
+    X_test, Y_test_oh, _ = create_dataset('philz_test.json', 'outdoors_test.json', ordering=ordering)
     Y_test_pred_oh = X_test.dot(w)
     Y_test = np.argmax(Y_test_oh, axis=1)
     Y_test_pred = np.argmax(Y_test_pred_oh, axis=1)
 
-    n = 24.
+    n = 20.
     print('Accuracy:', (n - (Y_test - Y_test_pred).sum()) / n)
 
 

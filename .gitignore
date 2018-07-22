@@ -1,5 +1,7 @@
 *.npy
 data
+*.json
+!package.json
 
 # Created by https://www.gitignore.io/api/node,macos,python
 

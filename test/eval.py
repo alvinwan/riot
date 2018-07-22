@@ -16,7 +16,7 @@ y = np.asscalar(np.argmax(y_oh, axis=1))
 confidence = np.abs(y_oh[0][0] - y_oh[0][1])
 
 if y == 0:
-    print('livingroom (confidence:{})'.format(round(confidence, 2)))
+    print('philz (confidence:{})'.format(round(confidence, 2)))
 else:
-    print('bedroom (confidence:{})'.format(round(confidence, 2)))
+    print('outdoors (confidence:{})'.format(round(confidence, 2)))
 
