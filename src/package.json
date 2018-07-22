@@ -1,0 +1,26 @@
+{
+  "name": "riot",
+  "version": "1.0.0",
+  "description": "Room detection for IoT devices",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alvinwan/riot.git"
+  },
+  "author": "Alvin Wan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alvinwan/riot/issues"
+  },
+  "homepage": "https://github.com/alvinwan/riot#readme",
+  "dependencies": {
+    "node-wifi": "^2.0.4"
+  },
+  "devDependencies": {
+    "electron": "^2.0.5"
+  }
+}
