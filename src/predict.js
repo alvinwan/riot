@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 function predict(completion=function() {}) {
   const spawn = require("child_process").spawn;
   const nodeProcess = spawn('node', ["observe.js"]);  // TODO - catch errors
@@ -13,7 +15,34 @@ function predict(completion=function() {}) {
   });
 }
 
+function get_filenames() {
+  filenames = new Set([]);
+  fs.readdirSync("data/").forEach(function(filename) {
+      filenames.add(filename.replace('_train', '').replace('_test', '').replace('.json', '' ))
+  });
+  filenames = Array.from(filenames.values())
+  filenames.sort();
+  return filenames
+}
+
 function main() {
+  var cards = document.querySelector('.cards');
+
+  if (cards) {
+    console.log(get_filenames())
+    get_filenames().forEach(function(element) {
+      var div = document.createElement('div');
+      div.classList = ["card"]
+
+      var p = document.createElement('p');
+      p.classList = ["card-title"]
+      p.innerHTML = element
+
+      div.appendChild(p)
+      document.querySelector('.cards').appendChild(div)
+    })
+  }
+
   predict(predict)
 }
 
