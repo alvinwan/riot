@@ -72,3 +72,15 @@ main {
   color:#666;
   margin-top:0.25em;
 }
+.text-field {
+  font-size:2em;
+  padding:0.5em;
+  border-radius:0.15em;
+  outline:none;
+  border:none;
+  margin-top:1em;
+  border:2px solid transparent;
+}
+.text-field.error {
+  border:2px solid red;
+}
