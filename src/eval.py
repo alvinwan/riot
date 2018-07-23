@@ -1,6 +1,7 @@
 import numpy as np
 import sys
 import json
+import os
 
 with open(sys.argv[1]) as f:
     samples = json.load(f)['samples']
@@ -13,9 +14,18 @@ X, _ = create_samples(samples, None, ordering)
 y_oh = np.array(X).dot(w)
 y = np.asscalar(np.argmax(y_oh, axis=1))
 
-confidence = np.abs(y_oh[0][0] - y_oh[0][1])
+y_second_largest = y_oh.copy()[0]
+y_second_largest[y] = 0
+y_second_largest = np.max(y_second_largest)
+confidence = y_oh[0][y] - y_second_largest
+confidence = round(confidence, 2)
 
-if y == 0:
-    print('philz (confidence:{})'.format(round(confidence, 2)))
-else:
-    print('outdoors (confidence:{})'.format(round(confidence, 2)))
+def get_datasets():
+    datasets = set()
+    for filename in os.listdir('./data'):
+        datasets.add(filename.split('_')[0])
+    return sorted(list(datasets))
+
+datasets = get_datasets()
+category = datasets[y]
+print('{},{}'.format(category, confidence))

@@ -105,12 +105,9 @@ function interface(n) {
 function retrain(completion=function(data) {}) {
   const spawn = require("child_process").spawn;
 
-  filenames = new Set([]);
-  fs.readdirSync("data/").forEach(function(filename) {
-      filenames.add(filename.replace('_train', '').replace('_test', '').replace('.json', '' ))
-  });
+  var filenames = get_filenames()
 
-  filenames = Array.from(filenames.values())
+  // TODO: - recode training script in NodeJS
   arguments = ["./train.py"].concat(filenames)
   console.log('python', arguments)
   const pythonProcess = spawn('python', arguments);
@@ -118,6 +115,16 @@ function retrain(completion=function(data) {}) {
   pythonProcess.stderr.on('data', (data) => {
     console.log(" * [ERROR] " + data.toString())
   })
+}
+
+function get_filenames() {
+  filenames = new Set([]);
+  fs.readdirSync("data/").forEach(function(filename) {
+      filenames.add(filename.replace('_train', '').replace('_test', '').replace('.json', '' ))
+  });
+  filenames = Array.from(filenames.values())
+  filenames.sort();
+  return filenames
 }
 
 if (typeof document == 'undefined') {

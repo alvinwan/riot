@@ -9,8 +9,8 @@
     <body>
       <main>
         <p class="text">I believe you're in the</p>
-        <h1 class="title">Kitchen</h1>
-        <p class="subtitle">with <span>86%</span> confidence</p>
+        <h1 class="title" id="predicted-room-name">Kitchen</h1>
+        <p class="subtitle">with <span id="predicted-confidence">86%</span> confidence</p>
         <div class="buttons">
           <a href="add.html" class="button">Add new room</a>
           <a href="#" class="button light">Clear all rooms</a>
@@ -27,5 +27,8 @@
           </div>
         </div>
       </main>
+      <script>
+      require('./predict.js')
+      </script>
     </body>
   </html>
