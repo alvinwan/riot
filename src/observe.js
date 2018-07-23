@@ -1,4 +1,5 @@
 var wifi = require('node-wifi');
+var fs = require('fs');
 
 async function demo(n=1, completion=function(data) {}, hook=function(i, sample) {}) {
 
@@ -75,23 +76,52 @@ function interface(n) {
 
   function hook(i, sample) {
     document.querySelector('#add-title').innerHTML = n-i+1;
-    status.innerHTML = "Found " + sample.length + " networks for sample " + i + "."
+    status.innerHTML = "Found " + sample.length + " networks for sample " + (n-i+1) + "."
   }
 
   function completion(data) {
-    var json = JSON.stringify(data);
-    var fs = require('fs');
-    fs.writeFile('data/' + room_name + '.json', json, 'utf8', function() {});
+    console.log(data);
+    train_data = {samples: data['samples'].slice(15)}
+    test_data = {samples: data['samples'].slice(15, 20)}
+    var train_json = JSON.stringify(train_data);
+    var test_json = JSON.stringify(test_data);
+
+    fs.writeFile('data/' + room_name + '_train.json', train_json, 'utf8', function() {});
+    fs.writeFile('data/' + room_name + '_test.json', test_json, 'utf8', function() {});
+
     console.log(" * [INFO] Successfully saved data.")
     status.innerHTML = "Done. Retraining model..."
-    // TODO: retrigger training
+
+    retrain((data) => {
+      var status = document.querySelector('#add-status');
+      accuracies = data.toString().split('\n')[0];
+      status.innerHTML = "Retraining succeeded: " + accuracies
+    });
   }
 
   return demo(n, completion, hook);
 }
 
+function retrain(completion=function(data) {}) {
+  const spawn = require("child_process").spawn;
+
+  filenames = new Set([]);
+  fs.readdirSync("data/").forEach(function(filename) {
+      filenames.add(filename.replace('_train', '').replace('_test', '').replace('.json', '' ))
+  });
+
+  filenames = Array.from(filenames.values())
+  arguments = ["./train.py"].concat(filenames)
+  console.log('python', arguments)
+  const pythonProcess = spawn('python', arguments);
+  pythonProcess.stdout.on('data', completion);
+  pythonProcess.stderr.on('data', (data) => {
+    console.log(" * [ERROR] " + data.toString())
+  })
+}
+
 if (typeof document == 'undefined') {
   main();
 } else {
-  document.querySelector('#start-recording').addEventListener('click', function() { interface(1) })
+  document.querySelector('#start-recording').addEventListener('click', function() { interface(20) })
 }
