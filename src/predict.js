@@ -43,7 +43,8 @@ function main() {
     })
   }
 
-  predict(predict)
+  f = function() { predict(f) }
+  predict(f)
 }
 
 main()

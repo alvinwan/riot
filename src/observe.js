@@ -1,6 +1,12 @@
 var wifi = require('node-wifi');
 var fs = require('fs');
 
+function sleep(ms){
+    return new Promise(resolve=>{
+        setTimeout(resolve,ms)
+    })
+}
+
 async function demo(n=1, completion=function(data) {}, hook=function(i, sample) {}) {
 
   console.log(" * [INFO] Starting to listen")
@@ -26,8 +32,18 @@ async function demo(n=1, completion=function(data) {}, hook=function(i, sample) 
             data['samples'].push(sample)
 
             var date2 = new Date();
-            console.log(" * [INFO] Collected sample " + i + " in " + ( (date2 - date1) / 1000 ) + "s")
-            hook(i, sample);
+
+            if (networks.length > 0) {
+              console.log(" * [INFO] Collected sample " + i + " in " + ( (date2 - date1) / 1000 ) + "s")
+              hook(i, sample);
+            } else {
+              console.log(" * [INFO] Failed to collect " + i + ". Waiting for a second before retrying...")
+              sleep(1000)
+              startScan(i);
+              return
+            }
+
+
             if (i > 1) {
               startScan(i-1);
             } else {
@@ -80,9 +96,8 @@ function interface(n) {
   }
 
   function completion(data) {
-    console.log(data);
-    train_data = {samples: data['samples'].slice(15)}
-    test_data = {samples: data['samples'].slice(15, 20)}
+    train_data = {samples: data['samples'].slice(0, 15)}
+    test_data = {samples: data['samples'].slice(15)}
     var train_json = JSON.stringify(train_data);
     var test_json = JSON.stringify(test_data);
 
