@@ -4,17 +4,28 @@
       <meta charset="UTF-8">
       <title>Riot | Room Detector</title>
       <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+      <link href="assets/style.css" rel="stylesheet">
     </head>
     <body>
-      <p class="text">Hi, I'm riot - a room detector based on observed wifi signal strengths. I believe you're in the</p>
-      <h1 class="title">Kitchen</h1>
-      <p class="subtitle">with <span>86%</span> confidence</p>
-      <a href="#" class="button">Add new room</a>
-      <div class="cards">
-        <div class="card">
-          <p class="card-title">Kitchen</p>
-          <p class="card-subtitle">12 observed networks</p>
+      <main>
+        <p class="text">Hi, I'm Riot. I believe you're in the</p>
+        <h1 class="title">Kitchen</h1>
+        <p class="subtitle">with <span>86%</span> confidence</p>
+        <div class="buttons">
+          <a href="#" class="button">Add new room</a>
+          <a href="#" class="button light">Clear all rooms</a>
         </div>
-      </div>
+        <p class="text">Added Rooms</p>
+        <div class="cards">
+          <div class="card">
+            <p class="card-title">Kitchen</p>
+            <p class="card-subtitle">0 current devices</p>
+          </div>
+          <div class="card">
+            <p class="card-title">Bedroom</p>
+            <p class="card-subtitle">0 current devices</p>
+          </div>
+        </div>
+      </main>
     </body>
   </html>

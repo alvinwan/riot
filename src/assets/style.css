@@ -1,0 +1,74 @@
+* {
+  font-family:'Montserrat'
+}
+h1, p {
+  margin:0;
+  padding:0;
+}
+html {
+  background-color:#eee;
+}
+main {
+  padding:3em 5em;
+}
+.title {
+  font-size:8em;
+  font-weight:800;
+  margin-top:0.05em;
+}
+.text {
+  margin-top:3em;
+  font-size:1.25em;
+  color:#666;
+}
+.subtitle {
+  font-size:1.5em;
+  margin-top:0.1em;
+}
+.subtitle span {
+  font-weight:700;
+}
+.button {
+  color:#FFF;
+  text-transform:uppercase;
+  font-weight:700;
+  padding:1.5em 3.5em;
+  text-decoration:none;
+  border-radius:0.25em;
+  box-shadow:0 0.25em 1.5em rgba(0,0,0,0.16);
+  display:inline-block;
+  margin-top:2em;
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#8cc63f+0,00a99d+100 */
+  background: #8cc63f; /* Old browsers */
+  background: -moz-linear-gradient(left, #8cc63f 0%, #00a99d 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, #8cc63f 0%,#00a99d 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, #8cc63f 0%,#00a99d 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8cc63f', endColorstr='#00a99d',GradientType=1 ); /* IE6-9 */
+}
+.button.light {
+  background:#FFF;
+  color:#666;
+}
+.button + .button {
+    margin-left:1em;
+}
+.cards {
+  display:flex;
+  flex-direction:row;
+  margin-top:1.5em;
+}
+.card {
+  background-color:#FFF;
+  box-shadow: 0 0.25em 1.5em rgba(0,0,0,0.16);
+  border-radius:0.25em;
+  margin:0 1.5em 0 0;
+  padding:1.25em 1.5em;
+}
+.card-title {
+  font-weight:700;
+  font-size:1.5em;
+}
+.card-subtitle {
+  color:#666;
+  margin-top:0.25em;
+}
