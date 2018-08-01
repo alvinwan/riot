@@ -2,8 +2,8 @@ var fs = require('fs');
 
 function predict(completion=function() {}) {
   const spawn = require("child_process").spawn;
-  const nodeProcess = spawn('node', ["observe.js"]);  // TODO - catch errors
-  const pythonProcess = spawn('python', ["eval.py", "samples.json"]);
+  const nodeProcess = spawn('node', ["scripts/observe.js"]);  // TODO - catch errors
+  const pythonProcess = spawn('python', ["-W", "ignore", "./model/eval.py", "samples.json"]);
   pythonProcess.stdout.on('data', (data) => {
     var information = data.toString().split('\n')[0].split(',');
     var category = information[0];

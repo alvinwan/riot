@@ -123,7 +123,7 @@ function retrain(completion=function(data) {}) {
   var filenames = get_filenames()
 
   // TODO: - recode training script in NodeJS
-  arguments = ["./train.py"].concat(filenames)
+  arguments = ["./model/train.py"].concat(filenames)
   console.log('python', arguments)
   const pythonProcess = spawn('python', arguments);
   pythonProcess.stdout.on('data', completion);
