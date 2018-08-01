@@ -7,7 +7,7 @@ import sys
 def create_dataset(*classpaths, ordering=None):
     classes = []
     for classpath in classpaths:
-        with open(classpath)  as f:
+        with open(classpath) as f:
             classes.append(json.load(f)['samples'])
     d = len(classpaths)
 

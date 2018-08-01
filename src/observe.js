@@ -139,6 +139,7 @@ function get_filenames() {
   });
   filenames = Array.from(filenames.values())
   filenames.sort();
+  filenames.splice(filenames.indexOf('.DS_Store'), 1)
   return filenames
 }
 

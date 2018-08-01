@@ -11,8 +11,12 @@ function predict(completion=function() {}) {
 
     document.querySelector('#predicted-room-name').innerHTML = category
     document.querySelector('#predicted-confidence').innerHTML = confidence
+    console.log(" * [INFO] Room '" + category + "' with confidence '" + confidence + "'")
     completion()
   });
+  pythonProcess.stderr.on('data', (data) => {
+    console.log(data.toString());
+  })
 }
 
 function get_filenames() {
@@ -22,6 +26,7 @@ function get_filenames() {
   });
   filenames = Array.from(filenames.values())
   filenames.sort();
+  filenames.splice(filenames.indexOf('.DS_Store'), 1)
   return filenames
 }
 

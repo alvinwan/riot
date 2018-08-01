@@ -24,7 +24,7 @@ def get_datasets():
     datasets = set()
     for filename in os.listdir('./data'):
         datasets.add(filename.split('_')[0])
-    return sorted(list(datasets))
+    return sorted(list([data for data in datasets if data not in ['.DS']]))
 
 datasets = get_datasets()
 category = datasets[y]
