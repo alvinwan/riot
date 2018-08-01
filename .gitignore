@@ -1,5 +1,6 @@
 *.npy
 data
+other-data
 *.json
 !package.json
 
