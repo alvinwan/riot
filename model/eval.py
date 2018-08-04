@@ -2,6 +2,7 @@ import numpy as np
 import sys
 import json
 import os
+import json
 
 from train import create_dataset
 from train import evaluate
@@ -20,7 +21,7 @@ def main():
     confidence = round(sorted_y[-1] - sorted_y[-2], 2)
 
     category = get_datasets()[y]
-    print('{},{}'.format(category, confidence))
+    print(json.dumps({"category": category, "confidence": confidence}))
 
 
 def get_datasets():
