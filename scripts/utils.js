@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 module.exports = {
   get_filenames: get_filenames,
   sleep: sleep

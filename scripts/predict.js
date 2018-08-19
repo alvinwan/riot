@@ -28,7 +28,7 @@ function main() {
   var cards = document.querySelector('.cards');
 
   if (cards) {
-    console.log(get_filenames())
+    console.log(utils.get_filenames())
     utils.get_filenames().forEach(function(element) {
       var div = document.createElement('div');
       div.classList = ["card"]
