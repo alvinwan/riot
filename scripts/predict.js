@@ -4,7 +4,7 @@ const spawn = require("child_process").spawn;
 
 function predict(completion=function() {}) {
   const nodeProcess = spawn('node', ["scripts/observe.js"]);  // TODO - catch errors
-  const pythonProcess = spawn('python', ["-W", "ignore", "./model/eval.py", "samples.json"]);
+  const pythonProcess = spawn('python', ["-W", "ignore", "./model/eval_kmeans.py", "samples.json"]);
   pythonProcess.stdout.on('data', (data) => {
     information = JSON.parse(data.toString());
     console.log(" * [INFO] Room '" + information.category + "' with confidence '" + information.confidence + "'")

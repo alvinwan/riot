@@ -89,7 +89,7 @@ function interface(n) {
 
 function retrain(completion=function(data) {}) {
   var filenames = utils.get_filenames()
-  const pythonProcess = spawn('python', ["./model/train.py"].concat(filenames));
+  const pythonProcess = spawn('python', ["./model/train_kmeans.py"].concat(filenames));
   pythonProcess.stdout.on('data', completion);
   pythonProcess.stderr.on('data', (data) => {
     console.log(" * [ERROR] " + data.toString())

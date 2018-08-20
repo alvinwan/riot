@@ -1,4 +1,5 @@
 *.npy
+*.pkl
 data
 other-data
 *.json
