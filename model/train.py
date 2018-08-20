@@ -4,9 +4,6 @@ import json
 import sys
 
 
-ordering = None
-
-
 def flatten(list_of_lists):
     """Flatten a list of lists to make a list.
     >>> flatten([[1], [2], [3, 4]])
@@ -20,30 +17,54 @@ def get_all_samples(paths):
     for label, path in enumerate(paths):
         with open(path) as f:
             for sample in json.load(f)['samples']:
-                yield [network['mac'] for network in sample], label
+                yield [network['mac'] for network in sample], \
+                    [network['signal_level'] for network in sample], label
 
 
-def one_hot(samples, ordering):
-    """Apply one-hot encoding to categorical variables.
+def bag_of_words(all_networks, all_strengths, ordering):
+    """Apply bag-of-words encoding to categorical variables.
 
-    >>> samples = one_hot([['a', 'b'], ['b', 'c'], ['a', 'c']], ['a', 'b', 'c'])
+    >>> samples = bag_of_words(
+    ...     [['a', 'b'], ['b', 'c'], ['a', 'c']],
+    ...     [[1, 2], [2, 3], [1, 3]],
+    ...     ['a', 'b', 'c'])
     >>> next(samples)
-    [1, 1, 0]
+    [1, 2, 0]
     >>> next(samples)
-    [0, 1, 1]
+    [0, 2, 3]
     """
-    for sample in samples:
-        yield [int(key in sample) for key in ordering]
+    for networks, strengths in zip(all_networks, all_strengths):
+        yield [int(strengths[networks.index(network)])
+            if network in networks else 0
+            for network in ordering]
 
 
 def create_dataset(classpaths, ordering=None):
     """Create dataset from a list of paths to JSON files."""
-    samples, labels = zip(*get_all_samples(classpaths))
+    networks, strengths, labels = zip(*get_all_samples(classpaths))
     if ordering is None:
-        ordering = list(sorted(set(flatten(samples))))
-    X = np.array(list(one_hot(samples, ordering)))
+        ordering = list(sorted(set(flatten(networks))))
+    X = np.array(list(bag_of_words(networks, strengths, ordering)))
     Y = np.array(list(labels))
     return X, Y, ordering
+
+
+def softmax(x):
+    """Convert one-hotted outputs into probability distribution"""
+    x = np.exp(x)
+    return x / np.sum(x)
+
+
+def predict(X, w):
+    """Predict using model parameters"""
+    return np.argmax(softmax(X.dot(w)), axis=1)
+
+
+def evaluate(X, Y, w):
+    """Evaluate model w on samples X and labels Y."""
+    Y_pred = predict(X, w)
+    accuracy = (Y == Y_pred).sum() / X.shape[0]
+    return accuracy
 
 
 def main():
@@ -57,19 +78,12 @@ def main():
     Y_train_oh = np.eye(len(classes))[Y_train]
     w, _, _, _ = lstsq(X_train, Y_train_oh)
     train_accuracy = evaluate(X_train, Y_train, w)
-    test_accuracy = evaluate(X_test, Y_test, w)
+    validation_accuracy = evaluate(X_test, Y_test, w)
 
-    print('Train accuracy ({}%), Validation accuracy ({}%)'.format(train_accuracy*100, test_accuracy*100))
+    print('Train accuracy ({}%), Validation accuracy ({}%)'.format(train_accuracy*100, validation_accuracy*100))
     np.save('w.npy', w)
     np.save('ordering.npy', np.array(ordering))
     sys.stdout.flush()
-
-
-def evaluate(X, Y, w):
-    """Evaluate model w on samples X and labels Y."""
-    Y_pred = np.argmax(X.dot(w), axis=1)
-    accuracy = (Y == Y_pred).sum() / X.shape[0]
-    return accuracy
 
 
 if __name__ == '__main__':

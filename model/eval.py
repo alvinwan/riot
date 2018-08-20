@@ -4,6 +4,8 @@ import json
 import os
 import json
 
+from train import predict
+from train import softmax
 from train import create_dataset
 from train import evaluate
 
@@ -14,11 +16,12 @@ def main():
 
     classpaths = [sys.argv[1]]
     X, _, _ = create_dataset(classpaths, ordering)
-    y_oh = X.dot(w)
-    y = np.asscalar(np.argmax(y_oh, axis=1))
+    y = np.asscalar(predict(X, w))
 
-    sorted_y = sorted(y_oh.flatten())
-    confidence = round(sorted_y[-1] - sorted_y[-2], 2)
+    sorted_y = sorted(softmax(X.dot(w)).flatten())
+    confidence = 1
+    if len(sorted_y) > 1:
+        confidence = round(sorted_y[-1] - sorted_y[-2], 2)
 
     category = get_datasets()[y]
     print(json.dumps({"category": category, "confidence": confidence}))

@@ -4,7 +4,7 @@ var fs = require('fs');
 /**
  * Uses a recursive function for repeated scans, since scans are asynchronous.
  */
-function record(completion) {
+function record(n, completion, hook) {
   wifi.init({
       iface : null // network interface, choose a random wifi interface if set to null
   });
@@ -19,15 +19,21 @@ function record(completion) {
         if (i <= 0) {
           return completion({samples: samples});
         }
-        console.log(" * [INFO] Collected sample " + (21-i) + " with " + networks.length + " networks")
+        hook(i, networks)
         samples.push(networks)
         startScan(i-1);
     });
   }
 
-  startScan(20);
+  startScan(n);
 }
 
-record(function(data) {
-  fs.writeFile('samples.json', JSON.stringify(data), 'utf8', function() {});
-})
+function cli() {
+  record(1, function(data) {
+    fs.writeFile('samples.json', JSON.stringify(data), 'utf8', function() {});
+  }, function(i, networks) {
+    console.log(" * [INFO] Collected sample " + (1-i) + " with " + networks.length + " networks")
+  })
+}
+
+cli();
