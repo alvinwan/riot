@@ -1,6 +1,8 @@
 # Riot
 A simple desktop app that detects which room you're in. The gif below is a demo of both training and prediction.
 
+by Alvin Wan [alvinwan.com](http://alvinwan.com)
+
 ![out1](https://user-images.githubusercontent.com/2068077/43188908-28702bb8-8faa-11e8-9194-903225ba36c0.gif)
 
 # How it works
