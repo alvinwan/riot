@@ -1,5 +1,5 @@
 # Riot
-A simple desktop app that detects which room you're in. The gif below is a demo of both training and prediction.
+A simple desktop app that detects which room you're in. The gif below is a demo of both training and prediction. Interested in building this step-by-step? See the article on Smashing Magazine, ["Building a Room Detector for IoT Devices on Mac OS"](https://www.smashingmagazine.com/2018/08/building-room-detector-iot-devices-mac-os/)
 
 by Alvin Wan [alvinwan.com](http://alvinwan.com)
 
