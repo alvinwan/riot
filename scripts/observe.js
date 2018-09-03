@@ -99,5 +99,5 @@ function retrain(completion=function(data) {}) {
 if (typeof document == 'undefined') {
   main();
 } else {
-  document.querySelector('#start-recording').addEventListener('click', function() { interface(100) })
+  document.querySelector('#start-recording').addEventListener('click', function() { interface(20) })
 }
