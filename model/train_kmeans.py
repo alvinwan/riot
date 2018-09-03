@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 import json
 import sys
+import os
 import pickle
 from sklearn.externals import joblib
 
@@ -73,6 +74,9 @@ def majority_vote(Y_pred, Y):
 
 
 def main():
+    if not os.path.exists('data'):
+         raise UserWarning('Could not find ./data/ directory. Have you created a '
+             'directory for data and collected data yet?')
     classes = sys.argv[1:]
 
     train_paths = sorted(['data/{}_train.json'.format(name) for name in classes])

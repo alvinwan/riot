@@ -38,6 +38,12 @@ From the repository root (in the directory with `package.json`), install all pac
 npm install
 ```
 
+Create a directory for your data.
+
+```
+mkdir data
+```
+
 To get started, run the desktop app.
 
 ```
